@@ -18,10 +18,10 @@ Some apps already exist for that _(e.g. [Gleeph](https://gleeph.com/), [Hardcove
 ### What do I use?
 
 I'll be using the [Open Library](https://openlibrary.org/dev/docs/api/books) API to retrieve book data.   
-The **front** will be using Angular.  
+The **front** will be using React.  
 The **back** will be using Node.JS, Express, Prisma and a Neon database for the users data.
 
-[<img src="https://cdn.worldvectorlogo.com/logos/angular-icon-1.svg" width="40" height="40">](https://angular.dev/)
+[<img src="https://cdn.worldvectorlogo.com/logos/react-2.svg" width="40" height="40">](https://react.dev/)
 [<img src="https://cdn.worldvectorlogo.com/logos/nodejs-icon.svg" width="40" height="40">](https://nodejs.org/en)
 [<img src="https://cdn.worldvectorlogo.com/logos/express-109.svg" width="40" height="40" style="background-color:white">](https://expressjs.com/)
 [<img src="https://cdn.worldvectorlogo.com/logos/prisma-3.svg" width="40" height="40" style="background-color:white">](https://www.prisma.io/)

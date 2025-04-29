@@ -1,0 +1,25 @@
+{
+  "name": "my_library_back",
+  "version": "1.0.0",
+  "description": "> You can find the front [here](https://github.com/Lauriane-Marques/my_library_front)",
+  "homepage": "https://github.com/Lauriane-Marques/my_library_back#readme",
+  "bugs": {
+    "url": "https://github.com/Lauriane-Marques/my_library_back/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lauriane-Marques/my_library_back.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
