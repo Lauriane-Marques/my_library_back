@@ -88,8 +88,9 @@ const userActions = {
     return res.status(200).json({
       message: "User successfully deleted"
     })
-  } catch {
-    
+  } catch (error){
+    console.error("Error deleting the user:", error);
+      return res.status(500).json({ error: "Server error", details: error.message });
   }
 }
 }
