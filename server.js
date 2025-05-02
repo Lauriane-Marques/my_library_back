@@ -2,7 +2,8 @@ const express = require('express')
 const cookieParser = require("cookie-parser");
 
 const authCheck = require('./authCheck')
-const authentification = require('./user/authentification')
+const authentification = require('./user/authentification');
+const userActions = require('./user/userActions');
 
 const app = express();
 const port = 3000;
@@ -13,6 +14,10 @@ app.use(cookieParser());
 app.use(express.static("public"));
 
 app.post('/signup', authentification.signUp)
+
+app.get('/user/:id', userActions.getUser)
+app.put('/update-user/:id', userActions.updateUser)
+app.delete('/delete-user/:id', userActions.deleteUser)
 
 app.listen(port, () => {
     console.log("serveur sur le port ", port);

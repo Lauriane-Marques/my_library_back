@@ -10,14 +10,16 @@ const authentification = {
       const { username, pseudo, email, password } = req.body;
       
       if (!username || !pseudo || !email || !password) {
-        return res.status(400).json({ error: 'Tous les champs sont requis' });
+        return res.status(400).json({ error: 'All fields are required' });
       }
       
       const existingUser = await prisma.users.findUnique({
         where: { email }
       });
+
+      //TODO: add message for the front
       if (existingUser) {
-        return res.status(409).json({ error: 'Un utilisateur avec cet email existe déjà' });
+        return res.status(409).json({ error: 'This email is already linked to an account' });
       }
   
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -32,11 +34,10 @@ const authentification = {
 
       const { password: _, ...userWithoutPassword } = user;
       return res.status(201).json({
-        message: 'Utilisateur créé avec succès',
+        message: 'User created successfully',
         user: userWithoutPassword
       });
     } catch (error) {
-      console.error('Erreur lors de l\'inscription:', error);
       return res.status(500).json({ error: 'Erreur lors de la création du compte' });
     }
   }
