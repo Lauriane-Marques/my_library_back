@@ -60,6 +60,7 @@ const authentification = {
 
       const passwordMatch = await bcrypt.compare(password, userInfo.password);
 
+      //TODO: Add message for the front
       if (!passwordMatch) {
         res.send("Incorrect email or password");
       }
