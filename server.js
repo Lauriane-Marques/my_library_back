@@ -1,5 +1,7 @@
 const express = require('express')
 const cookieParser = require("cookie-parser");
+const cors = require("cors")
+
 
 const authCheck = require('./authCheck')
 const authentification = require('./user/authentification');
@@ -12,6 +14,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static("public"));
+app.use(cors());
 
 app.post('/signup', authentification.signUp)
 app.post('/login', authentification.logIn)
