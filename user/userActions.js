@@ -33,7 +33,7 @@ const userActions = {
   updateUser: async (req, res) => {
     //TODO: Compare connected user id found in token with the id trying to be updated
     try {
-      // const userId = req.user.id;
+      const userId = req.user.id;
       const profileId = req.params.id;
       const { username, email } = req.body;
       
@@ -43,6 +43,10 @@ const userActions = {
       
       if (!userExists) {
         return res.status(404).json({ error: "User not found" });
+      }
+
+      if(userId !== profileId){
+        return res.status(403).json({error: "You cannot modify this account"})
       }
       
       const updatedUser = await prisma.users.update({
@@ -66,10 +70,9 @@ const userActions = {
   },
 
   deleteUser: async (req, res) => {
-
   //TODO: Compare connected user id found in token with the id trying to be deleted
     try {
-    // const userId = req.user.id;
+    const userId = req.user.id;
     const profileId = req.params.id
 
     const userExists = await prisma.users.findUnique({
@@ -78,6 +81,10 @@ const userActions = {
 
     if (!userExists) {
       return res.status(404).json({ error: "User not found" });
+    }
+
+    if(userId !== profileId){
+      return res.status(403).json({error: "You cannot modify this account"})
     }
 
     const deleteUser = await prisma.users.delete({
