@@ -13,6 +13,8 @@ const authentification = {
         return res.status(400).json({ error: 'All fields are required' });
       }
       
+      //TODO: add email verification (new function, testable)
+
       const existingUser = await prisma.users.findUnique({
         where: { email }
       });
@@ -38,8 +40,51 @@ const authentification = {
         user: userWithoutPassword
       });
     } catch (error) {
-      return res.status(500).json({ error: 'Erreur lors de la création du compte' });
+      return res.status(500).json({ error: 'Error creating the account'});
     }
+  },
+
+  logIn: async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      const userInfo = await await prisma.users.findUnique({
+        where: {
+          email: email,
+        },
+        select: {
+          id: true,
+          email: true,
+          password: true,
+        },
+      });
+
+      const passwordMatch = await bcrypt.compare(password, userInfo.password);
+
+      if (!passwordMatch) {
+        res.send("Incorrect email or password");
+      }
+      const token = jwt.sign({ id: Number(userInfo.id) }, jwtKey, {
+        expiresIn: "3 hours",
+      });
+      res.cookie("token", token, { httpOnly: true });
+      res.status(201).json({
+        message: 'Successfully logged in',
+        token: token
+      })
+  } catch (error){
+      console.error("Error logging in:", error);
+      return res.status(500).json({ error: "Server error", details: error.message });
+  }
+  },
+
+  logOut: async (req, res) => {
+    try {
+      res.clearCookie('token')
+      res.send("Successfully logged out");
+    } catch (error){
+      console.error("Error logging out:", error);
+      return res.status(500).json({ error: "Server error", details: error.message });
+  }
   }
 }
   module.exports = authentification

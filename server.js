@@ -14,6 +14,11 @@ app.use(cookieParser());
 app.use(express.static("public"));
 
 app.post('/signup', authentification.signUp)
+app.post('/login', authentification.logIn)
+
+app.get('/', authCheck.verifyToken, async (req, res)=> {
+  res.send("Access granted")
+})
 
 app.get('/user/:id', userActions.getUser)
 app.put('/update-user/:id', userActions.updateUser)
