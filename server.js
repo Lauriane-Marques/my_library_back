@@ -8,7 +8,6 @@ const authentification = require('./user/authentification');
 const userActions = require('./user/userActions');
 
 const app = express();
-const port = 3000;
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
@@ -27,6 +26,11 @@ app.get('/user/:id', userActions.getUser)
 app.put('/update-user/:id', userActions.updateUser)
 app.delete('/delete-user/:id', userActions.deleteUser)
 
-app.listen(port, () => {
-    console.log("serveur sur le port ", port);
-  })
+const PORT = process.env.PORT || 3000;
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`Serveur en écoute sur le port ${PORT}`);
+  });
+}
+
+module.exports = app;
