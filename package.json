@@ -16,10 +16,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "vercel-build": "node vercel-build-step.js && prisma generate",
+    "postinstall": "prisma generate",
     "start": "node --watch server.js"
   },
   "dependencies": {
     "@prisma/client": "^6.7.0",
+    "prisma": "^6.7.0",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
