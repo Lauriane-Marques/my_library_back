@@ -14,6 +14,7 @@ const authentification = {
       }
       
       //TODO: add email verification (new function, testable)
+      //TODO: add pseudo verification (no spaces)
 
       const existingUser = await prisma.users.findUnique({
         where: { email }
@@ -58,11 +59,14 @@ const authentification = {
         },
       });
 
+      if (!userInfo) {
+        return res.status(401).json({ error: "Incorrect email or password" });
+      }
+
       const passwordMatch = await bcrypt.compare(password, userInfo.password);
 
-      //TODO: Add message for the front
       if (!passwordMatch) {
-        res.send("Incorrect email or password");
+        return res.status(401).json({ error: "Incorrect email or password" });
       }
       const token = jwt.sign({ id: Number(userInfo.id) }, jwtKey, {
         expiresIn: "3 hours",
@@ -81,7 +85,7 @@ const authentification = {
   logOut: async (req, res) => {
     try {
       res.clearCookie('token')
-      res.send("Successfully logged out");
+      return res.status(200).json({message :"Successfully logged out"});
     } catch (error){
       console.error("Error logging out:", error);
       return res.status(500).json({ error: "Server error", details: error.message });
