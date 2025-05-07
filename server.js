@@ -27,7 +27,7 @@ app.get('/', authCheck.verifyToken, async (req, res)=> {
   res.send("Access granted")
 })
 
-app.get('/user/:id', userActions.getUser)
+app.get('/user/:id', authCheck.verifyToken, userActions.getUser)
 app.put('/update-user/:id', userActions.updateUser)
 app.delete('/delete-user/:id', userActions.deleteUser)
 
