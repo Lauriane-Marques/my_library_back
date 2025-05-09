@@ -11,8 +11,8 @@ app.use(express.json())
 const jwtKey = process.env.JWT_KEY;
 
 const verifyToken = (req, res, next) => {
-    // const token = req.cookies.token;
-    const token = req.body //to test with postman
+    const token = req.cookies.token;
+    // const token = req.body //to test with postman
   
     if (!token) {
       //return res.status(401).json({ message: "Access Denied" });

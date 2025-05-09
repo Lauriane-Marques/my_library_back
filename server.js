@@ -1,7 +1,14 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config({ path: '.env.local' });
+} else {
+  require('dotenv').config({ path: '.env.production' });
+}
+
 const express = require('express')
 const cookieParser = require("cookie-parser");
 const cors = require("cors")
 
+const config = require('./config')
 
 const authCheck = require('./authCheck')
 const authentification = require('./user/authentification');
@@ -14,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static("public"));
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: config.frontendUrl,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -31,7 +38,7 @@ app.get('/user/:id', authCheck.verifyToken, userActions.getUser)
 app.put('/update-user/:id', userActions.updateUser)
 app.delete('/delete-user/:id', userActions.deleteUser)
 
-const PORT = process.env.PORT || 3000;
+const PORT = config.port;
 if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT, () => {
     console.log(`Serveur en écoute sur le port ${PORT}`);
