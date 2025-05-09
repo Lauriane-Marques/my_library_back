@@ -38,6 +38,14 @@ app.get('/user/:id', authCheck.verifyToken, userActions.getUser)
 app.put('/update-user/:id', userActions.updateUser)
 app.delete('/delete-user/:id', userActions.deleteUser)
 
+app.use((err, req, res, next) => {
+  console.error('Server error:', err.stack);
+  res.status(err.status || 500).json({
+    message: err.message || 'An error occured on the server',
+    error: process.env.NODE_ENV === 'production' ? {} : err
+  });
+});
+
 const PORT = config.port;
 if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT, () => {
